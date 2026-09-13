@@ -4,4 +4,6 @@ async function submitPrompt() {
     console.log(response);
     const data = await response.json();
     console.log(data);
+    document.getElementById("server-response").innerText = "Their name is " + data.name + ", they are " + data.age + "lightyears old.";
+
 }
