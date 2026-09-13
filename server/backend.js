@@ -8,9 +8,12 @@ const app = express();
 const PORT = 3874;
 
 // Define a basic route for the root URL ("/")
-function respondToACall(req, res){
+function respondToACall(req, res) {
     let numberThing = req.query.a;
-    res.send(`<button>HIIIIIIIIIi ${numberThing}</button>`);
+    res.send({
+        name: 'Varun',
+        age: 42
+    });
 }
 
 app.get('/potatoes', respondToACall);
@@ -20,4 +23,3 @@ function serverStartCallback() {
     console.log(`Server is successfully running at https://localhost:${PORT}`);
 }
 app.listen(PORT, serverStartCallback);
-
