@@ -15,8 +15,8 @@ app.use(cors({ origin: 'https://varunvasanth.github.io' }));
 // Define a basic route for the root URL ("/")
 function respondToACall(req, res) {
     let numberThing = req.query.a;
-    res.send({
-        name: 'Varun',
+    res.json({
+        name: 'Arthur',
         age: 42
     });
 }
