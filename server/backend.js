@@ -10,7 +10,7 @@ const app = express();
 const PORT = 3874;
 
 // Enable CORS for your specific frontend domain
-app.use(cors({ origin: ['https://varunvasanth.github.io', 'http://127.0.0.1:3000/index.html?vscode-livepreview=true'] }));
+app.use(cors({ origin: ['https://varunvasanth.github.io', 'http://127.0.0.1:3000'] }));
 
 // Define a basic route for the root URL ("/")
 function respondToACall(req, res) {
