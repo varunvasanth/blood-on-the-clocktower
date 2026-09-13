@@ -1,11 +1,16 @@
 // Import the express module
 const express = require('express');
 
+const cors = require('cors');
+
 // Initialize the express application
 const app = express();
 
 // Define the port number
 const PORT = 3874;
+
+// Enable CORS for your specific frontend domain
+app.use(cors({ origin: 'https://varunvasanth.github.io' }));
 
 // Define a basic route for the root URL ("/")
 function respondToACall(req, res) {
