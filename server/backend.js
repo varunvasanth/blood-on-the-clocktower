@@ -1,3 +1,8 @@
+const { GoogleGenAI } = require('@google/genai');
+require('dotenv').config(); // Automatically loads environment variables from .env
+
+const ai = new GoogleGenAI();
+
 // Import the express module
 const express = require('express');
 
@@ -24,20 +29,28 @@ let dataList = [{
     age: -1
 }]
 
-// Define a basic route for the root URL ("/")
-function respondToACall(req, res) {
-    let name = req.query.name;
-    let clientResponse = { name:"Sorry, that name isn't defined.", age: 'NAN'};
-    for(let i = 0;i<dataList.length;i++){
-        if(dataList[i].name === name){
-            clientResponse = dataList[i]
-        }
-    }
+async function talkToGemini() {
     
-    res.json(clientResponse);
+    const geminiResponse = await ai.models.generateContent({
+        model: 'gemini-3.8-flash',
+        contents: 'Explain blood on the clocktower in one simple sentence.',
+
+    });
+    console.log("Gemini Response:\n", geminiResponse.text);
+    return geminiResponse.text;
 }
 
-app.get('/potatoes', respondToACall);
+// Define a basic route for the root URL ("/")
+async function respondToACall(req, res) {
+    let name = req.query.name;
+    let clientResponse = { name:"Sorry, that name isn't defined.", age: 'NAN'};
+    
+    clientResponse.name = await talkToGemini();
+    res.json(clientResponse);
+
+}
+
+app.get('/', respondToACall);
 
 // Start the server and listen on the specified port
 function serverStartCallback() {
