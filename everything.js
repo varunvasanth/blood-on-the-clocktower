@@ -1,6 +1,6 @@
 async function submitPrompt() {
     let name = document.getElementById("name-input").value;
-    const theURL = `https://sturdy-space-cod-57qp5p7vjp7cvrwj.github.dev/?name=${name}`;
+    const theURL = `https://sturdy-space-cod-57qp5p7vjp7cvrwj.app.github.dev/?name=${name}`;
     const response = await fetch(theURL);
     console.log(response);
     const data = await response.json();
