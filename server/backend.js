@@ -32,7 +32,7 @@ let dataList = [{
 async function talkToGemini() {
     
     const geminiResponse = await ai.models.generateContent({
-        model: 'gemini-3.8-flash',
+        model: 'gemini-3.6-flash',
         contents: 'Explain blood on the clocktower in one simple sentence.',
 
     });
