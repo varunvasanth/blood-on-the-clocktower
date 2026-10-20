@@ -1,0 +1,45 @@
+body {
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+}
+.circle-frame {
+    width: 125px;
+    height: 125px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 20px;
+    
+}
+.circle-frame .circle{
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    transform: translateZ(0);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black
+    
+}
+
+.circle-frame .circle img {
+    width: 166px;
+    height: 166px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.circle-frame.selected .circle{
+    
+    transform: scale(1.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: green;
+}
+#player-amount-indicator{
+    font-family: cursive;
+    font-size: xx-large;
+}
