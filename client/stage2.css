@@ -12,7 +12,8 @@ body {
     justify-content: center;
     border-radius: 50%;
     cursor: pointer;
-    margin: 20px;
+    margin: 22px;
+    margin-top: 30px;
     
 }
 .circle-frame .circle{
@@ -37,9 +38,21 @@ body {
     
     transform: scale(1.2);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    border-color: green;
+    border:4px solid green;
 }
 #player-amount-indicator{
     font-family: cursive;
     font-size: xx-large;
+}
+#error-indicator{
+    font-family: cursive;
+    color: red;
+    font-size: larger;
+}
+
+#submit-characters{
+    font-family: cursive;
+    font-size: large;
+    color:blue;
+    background-color: white;
 }

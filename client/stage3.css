@@ -1,0 +1,35 @@
+body {
+    display:grid;
+    place-items:center;
+    padding-top:3%;
+}
+#parent-circle{
+    position: relative;
+    width: 800px;
+    height: 800px;
+    border: 1px dashed black;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+}
+.child-circle{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 125px;
+    height: 125px;
+    border:3px solid black;
+    border-radius: 50%;
+
+    --angle: calc((360deg / sibling-count() * (sibling-index() - 1)) - 90deg);
+    
+    transform:
+        rotate(var(--angle))
+        translate(400px)
+        rotate(calc(-1*var(--angle)));
+}
+.child-circle img {
+    width: 175px;
+    height: 175px;
+}
