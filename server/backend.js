@@ -7,6 +7,8 @@ const model = "gemini-3.6-flash";
 
 const agents = new Map();
 
+const names = ["Alice", "Bob", "Carla", "Doug", "Edward", "Fred"];
+
 const baseSystemInstruction = `
 You are a player in a game of Blood on the Clocktower with other AI agents. 
 Your goal is to win based on your alignment (Good wants to execute the Demon; Evil wants to reduce the town to 2 players while keeping the Demon alive).
@@ -14,6 +16,8 @@ For more rules, visit https://wiki.bloodontheclocktower.com/
 CRITICAL RULES:
 1. Never break character. Speak in the first person.
 2. Do not hallucinate game events. Only react to what the Storyteller tells you.
+3. Do not add extra words when fewer would do. For example, don't say "I pick Carla. I am using my Poisoner ability on her tonight to corrupt her ability and ensure any information she receives is false, keeping the Good team confused.". 
+3a. This is mostly for night choices, as private chats and public speeches may require long statements. 
 `
 // Import the express module
 const express = require('express');
@@ -63,6 +67,7 @@ async function respondToACall(req, res) {
 async function createPlayer(req, res) {
     const name = req.query.name;
     const character = req.query.character;
+    const playerAmount = req.query.playerAmount;
     let agent = ai.chats.create({
         model: model,
         config: {
@@ -71,13 +76,16 @@ async function createPlayer(req, res) {
     });
     agents.set(name, agent);
     let agentResponse = await agent.sendMessage({
-        message: `You are the ${character}, respond with your character type. Make the response only 1 word.`
+        message: `You are the ${character}, respond with your character type. Make the response only 1 word. 
+        You are in a ${playerAmount} player game, and the players are ${names.slice(0,playerAmount).join(", ")} in that order clockwise around the circle. 
+        You are ${name}. Add to your response the just the name of the person sitting two spot clockwise from you, and only that.`
     });   
     res.json({response:agentResponse.text});
 }
 async function talkToPlayer(req, res){
-    const message = req.query.message;
-    const agentResponse = await agents.get("Alice").sendMessage({
+    const message = req.query.message;;
+    const player = req.query.player;
+    const agentResponse = await agents.get(player).sendMessage({
         message: message
     });
     res.json({response:agentResponse.text});
