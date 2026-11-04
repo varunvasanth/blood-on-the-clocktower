@@ -5,6 +5,8 @@ const ai = new GoogleGenAI();
 
 const model = "gemini-3.6-flash";
 
+const agents = new Map();
+
 const baseSystemInstruction = `
 You are a player in a game of Blood on the Clocktower with other AI agents. 
 Your goal is to win based on your alignment (Good wants to execute the Demon; Evil wants to reduce the town to 2 players while keeping the Demon alive).
@@ -67,15 +69,24 @@ async function createPlayer(req, res) {
             systemInstruction: baseSystemInstruction
         }
     });
+    agents.set(name, agent);
     let agentResponse = await agent.sendMessage({
-        message: "are you ready to play? 1 word answer"
+        message: `You are the ${character}, respond with your character type. Make the response only 1 word.`
     });   
     res.json({response:agentResponse.text});
 }
+async function talkToPlayer(req, res){
+    const message = req.query.message;
+    const agentResponse = await agents.get("Alice").sendMessage({
+        message: message
+    });
+    res.json({response:agentResponse.text});
+}
+
 
 app.get('/', respondToACall);
 app.get('/create-player', createPlayer);
-
+app.get('/talk-to-player', talkToPlayer);
 // Start the server and listen on the specified port
 function serverStartCallback() {
     console.log(`Server is successfully running at https://localhost:${PORT}, so thanks`);
