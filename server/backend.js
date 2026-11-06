@@ -18,6 +18,8 @@ CRITICAL RULES:
 2. Do not hallucinate game events. Only react to what the Storyteller tells you.
 3. Do not add extra words when fewer would do. For example, don't say "I pick Carla. I am using my Poisoner ability on her tonight to corrupt her ability and ensure any information she receives is false, keeping the Good team confused.". 
 3a. This is mostly for night choices, as private chats and public speeches may require long statements. 
+
+
 `
 // Import the express module
 const express = require('express');

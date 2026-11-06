@@ -6,18 +6,26 @@
 </head>
 
 <body>
-    <button id="create-agents" onclick="createAgents()">Create agents</button>
+    
     <br>
     <br>
     <br>
     <div id="parent-circle">
-    </div>
+        <div id="element-container">
+            <div><button id="create-agents" onclick="createAgents()">Create agents</button></div>
     
-    <input id="message-text" placeholder="Enter message here"> 
-    <select id="player-selector">
+            <div><input id="message-text" placeholder="Enter message here"> 
+            <select id="player-selector"></select>
+            <button id="submit-message" onclick="talkToPlayer()">Submit</button></div>
+            
+            <div><p id="agent-response-display"></p></div>
+            <br>
+            <div><button id="clear-text" onclick="clearText('agent-response-display')">Clear</button></div>
+        </div>
         
-    </select>
-    <button id="submit-message" onclick="talkToPlayer()">Submit</button>
+        <div id="token-container"></div>
+
+    </div>
 </body>
 
 </html>
