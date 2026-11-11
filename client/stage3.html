@@ -6,33 +6,38 @@
 </head>
 
 <body>
+    <div id="big-wrapper">
+        <div id="parent-circle">
+            <div id="element-container">
+                <button id="create-agents" onclick="createAgents()">Create agents</button> <br>
 
-    <br>
-    <br>
-    <br>
-    <div id="parent-circle">
-        <div id="element-container">
-            <button id="create-agents" onclick="createAgents()">Create agents</button> <br>
+                Direct message <br>
 
-            Direct message <br>
+                <input id="message-text" placeholder="Enter message here">
+                <select id="direct-message-player-selector"></select>
+                <button id="submit-message" onclick="talkToPlayer()">Submit</button> <br> <br>
 
-            <input id="message-text" placeholder="Enter message here">
-            <select id="direct-message-player-selector"></select>
-            <button id="submit-message" onclick="talkToPlayer()">Submit</button> <br> <br>
-
-            Allow private chat between players <br>
-            <select class="private-chat-player-selector" id="private-chat-player-1"></select>
-            <select class="private-chat-player-selector" id="private-chat-player-2"></select>
-            <button onclick="handlePrivateChat()">Submit</button> <br> <br>
+                Allow private chat between players <br>
+                <select class="private-chat-player-selector" id="private-chat-player-1"></select>
+                <select class="private-chat-player-selector" id="private-chat-player-2"></select>
+                <button onclick="handlePrivateChat()">Submit</button> <br> <br>
+                <p id="agent-response-display"></p>
+                <button id="clear-text" onclick="clearText('agent-response-display')">Clear</button> 
 
 
-            <p id="agent-response-display"></p> <br>
-            
-            <button id="clear-text" onclick="clearText('agent-response-display')">Clear</button>
+                
+            </div>
+
+            <div id="token-container"></div>
+
         </div>
-
-        <div id="token-container"></div>
-
+        <div>
+            <select id="private-chat-messages-selector"></select>
+        
+            <p id="private-chat-messages-display"></p>
+           
+            <button id="clear-text" onclick="clearText('private-chat-messages-display')">Clear</button>    
+        </div>
     </div>
 </body>
 

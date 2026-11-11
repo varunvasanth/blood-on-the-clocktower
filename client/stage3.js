@@ -6,6 +6,10 @@ const baseURL = "http://localhost:3874/";
 
 const names = ["Alice", "Bob", "Carla", "Doug", "Edward"];
 
+let selectedPrivateChat;
+
+let privateChatMessages = [];
+
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
 
@@ -22,7 +26,6 @@ const selectedCharacters = shuffle(JSON.parse(localStorage.getItem("selected-cha
 function drawCharacterTokens() {
 
   for (let i = 0; i < selectedCharacters.length; i++) {
-    console.log(names[i]);
     document.getElementById("direct-message-player-selector").innerHTML += `<option value='${names[i]}'> ${names[i]}</option>`
     document.getElementsByClassName("private-chat-player-selector")[0].innerHTML += `<option value='${names[i]}'> ${names[i]}</option>`
     document.getElementsByClassName("private-chat-player-selector")[1].innerHTML += `<option value='${names[i]}'> ${names[i]}</option>`
@@ -31,7 +34,6 @@ function drawCharacterTokens() {
         <div class='child-circle'>
             <img src="./resources/${selectedCharacters[i]}.png">   
         </div>`
-    console.log(selectedCharacters[i]);
   }
 }
 
@@ -76,31 +78,92 @@ function clearText(id) {
 }
 
 async function handlePrivateChat() {
+  addPrivateChatToDisplay();
+  let ENDcount = 0;
   const player1 = document.getElementById("private-chat-player-1").value;
   const player2 = document.getElementById("private-chat-player-2").value;
+  const display = document.getElementById("private-chat-messages-display");
   let currentMessage;
+  const privateChatCount = privateChatMessages.length;
 
   //First message
   let responsePromise = await fetch(baseURL + `talk-to-player?message=You are in a private chat with ${player2}. What do you wish to say to them? Respond with "END" at the end of any reply if you are ready for the conversation to end.&player=${player1}`);
   let data = await responsePromise.json();
-  currentMessage = displayPlayerResponse(data, player1 + " to " + player2);
+  currentMessage = data.response;
+  privateChatMessages.push([player1 + " to " + player2 + ": " + data.response + "<br>"]);
+  updatePrivateChatDisplay(display);
+  console.log(privateChatMessages);
 
   //First reply
   responsePromise = await fetch(baseURL + `talk-to-player?message=You are in a private chat with ${player1}. They said: ${currentMessage}. What do you wish to say to them? Respond with "END" at the end of any reply if you are ready for the conversation to end.&player=${player2}`);
   data = await responsePromise.json();
-  currentMessage = displayPlayerResponse(data, player2 + " to " + player1);
+  currentMessage = data.response;
+  privateChatMessages[privateChatCount].push(player2 + " to " + player1 + ": " + data.response + "<br>");
+  updatePrivateChatDisplay(display);
+  console.log(privateChatMessages);
+  if (currentMessage.slice(-3) === "END") {
+    ENDcount++;
+
+  }
+  console.log(ENDcount);
 
   //Continuing conversation
-  while (currentMessage.slice(-3) !== "END") {
+  for (let i = 0; i < 10; i++) {
 
     responsePromise = await fetch(baseURL + `talk-to-player?message=They said: ${currentMessage}. What do you wish to say to them?&player=${player1}`);
     data = await responsePromise.json();
-    currentMessage = displayPlayerResponse(data, player1 + " to " + player2);
+    currentMessage = data.response;
+    privateChatMessages[privateChatCount].push(player1 + " to " + player2 + ": " + data.response + "<br>");
+    console.log(privateChatMessages);
+    updatePrivateChatDisplay(display);
+    if (currentMessage.slice(-3) === "END") {
+      ENDcount++;
+      if (ENDcount > 1) {
+        break;
+      }
+      console.log(ENDcount);
+    }
+
 
     responsePromise = await fetch(baseURL + `talk-to-player?message=They said: ${currentMessage}. What do you wish to say to them?&player=${player2}`);
     data = await responsePromise.json();
-    currentMessage = displayPlayerResponse(data, player2 + " to " + player1);
+    currentMessage = data.response;
+    privateChatMessages[privateChatCount].push(player2 + " to " + player1 + ": " + data.response + "<br>");
+    console.log(privateChatMessages);
+    updatePrivateChatDisplay(display);
+    if (currentMessage.slice(-3) === "END") {
+      ENDcount++;
+      console.log(ENDcount);
+      if (ENDcount > 1) {
+        break;
+      }
+    }
   }
+}
+
+function addPrivateChatToDisplay() {
+  const player1 = document.getElementById("private-chat-player-1").value;
+  const player2 = document.getElementById("private-chat-player-2").value;
+  document.getElementById("private-chat-messages-selector").innerHTML += `<option value="${player1},${player2}">${player1} and ${player2}</option>`;
+}
+
+document.getElementById("private-chat-messages-selector").addEventListener("change", function (event) { updatePrivateChatDisplay(event.target); });
+
+function updatePrivateChatDisplay(event){
+  let ARRAYindex;
+  selectedPrivateChat = event.value;
+  const player1 = document.getElementById("private-chat-messages-selector").value.split(",")[0];
+  const player2 = document.getElementById("private-chat-messages-selector").value.split(",")[1];
+  for (let i = 0; i < privateChatMessages.length; i++) {
+    console.log(privateChatMessages[i][0].slice(0, (player1.length + player2.length + 4)));
+    if (privateChatMessages[i][0].slice(0, (player1.length + player2.length + 4)) === `${player1} to ${player2}`){
+      console.log("found at index: " + i);
+      ARRAYindex = i;
+      break;
+    }
+  }
+  document.getElementById("private-chat-messages-display").innerHTML = privateChatMessages[ARRAYindex].join();
+
 }
 drawCharacterTokens();
 

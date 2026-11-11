@@ -1,7 +1,22 @@
 body {
     display:grid;
     place-items:center;
-    padding-top:3%;
+    padding: 5%;
+}
+#big-wrapper{
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: center;
+    gap: 100px;
+    transform: translate(-25%, 0);
+}
+#private-chat-messages-display {
+    max-width: 350px;       /* 1. Prevents the text from getting wider than this pixel limit */
+    width: 100%;            /* 2. Allows it to shrink if the screen gets smaller than the limit */
+    word-wrap: break-word;  /* 3. Forces exceptionally long individual words to break down */
+    overflow-wrap: break-word;
+    text-wrap: pretty;      /* 4. Keeps the wrapping looking clean and readable */
 }
 #create-agents{
     margin:50px;
@@ -18,8 +33,6 @@ body {
 #element-container{
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
     display: column;
     flex-direction: column;
     align-items: center;
