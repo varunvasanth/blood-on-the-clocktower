@@ -1,7 +1,8 @@
 <html>
 
 <head>
-    <script src="stage3.js" defer></script>
+    <script src="stage3-nominations-and-voting.js" defer></script>
+    <script src="stage3-private-chats-and-night-actions.js" defer></script>
     <link rel="stylesheet" href="stage3.css">
 </head>
 
@@ -9,6 +10,12 @@
     <div id="big-wrapper">
         <div id="parent-circle">
             <div id="element-container">
+                <input type="radio" id="night+private" name="mode-selector" checked>
+                <label for="night+private">Night actions and private chats</label> <br>
+
+                <input type="radio" id="noms+voting" name="mode-selector">
+                <label for="noms+voting">Nominations and voting</label> <br>
+
                 <button id="create-agents" onclick="createAgents()">Create agents</button> <br>
 
                 Direct message <br>
@@ -22,10 +29,10 @@
                 <select class="private-chat-player-selector" id="private-chat-player-2"></select>
                 <button onclick="handlePrivateChat()">Submit</button> <br> <br>
                 <p id="agent-response-display"></p>
-                <button id="clear-text" onclick="clearText('agent-response-display')">Clear</button> 
+                <button id="clear-text" onclick="clearText('agent-response-display')">Clear</button>
 
 
-                
+
             </div>
 
             <div id="token-container"></div>
@@ -33,10 +40,10 @@
         </div>
         <div>
             <select id="private-chat-messages-selector"></select>
-        
+
             <p id="private-chat-messages-display"></p>
-           
-            <button id="clear-text" onclick="clearText('private-chat-messages-display')">Clear</button>    
+
+            <button id="clear-text" onclick="clearText('private-chat-messages-display')">Clear</button>
         </div>
     </div>
 </body>
